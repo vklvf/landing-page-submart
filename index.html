@@ -68,12 +68,9 @@
       section {
         padding: 100px 0;
       }
-      body > section:not(.hero),
-      footer {
-        content-visibility: auto;
-        contain-intrinsic-size: 700px;
-      }
       #features,
+      #subscore,
+      #capabilities,
       #authors,
       #pricing,
       #faq,
@@ -258,7 +255,7 @@
       .logo {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         font-weight: 800;
         font-size: 20px;
         transition: font-size 0.4s ease;
@@ -267,21 +264,20 @@
         font-size: 18px;
       }
       .logo-mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: #fff;
+        width: 56px;
+        height: 28px;
+        border-radius: 0;
+        background: transparent;
         display: grid;
         place-items: center;
         color: #fff;
         font-size: 16px;
         overflow: hidden;
-        padding: 3px;
-        box-shadow: inset 0 0 0 1px rgba(255, 90, 0, 0.12);
+        padding: 0;
+        box-shadow: none;
         transition:
           width 0.45s ease,
-          height 0.45s ease,
-          border-radius 0.45s ease;
+          height 0.45s ease;
       }
       .logo-mark img {
         width: 100%;
@@ -290,9 +286,9 @@
         display: block;
       }
       header.island .logo-mark {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+        width: 48px;
+        height: 24px;
+        border-radius: 0;
       }
       .nav-links {
         display: flex;
@@ -463,6 +459,12 @@
         transform-origin: center bottom;
         animation: phoneIntro 1.35s cubic-bezier(0.16, 1, 0.3, 1) both;
         will-change: transform;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .phone * {
+        -webkit-user-select: none;
+        user-select: none;
       }
       @keyframes phoneIntro {
         from {
@@ -777,6 +779,515 @@
       .feature.accent-feature p {
         color: rgba(255, 255, 255, 0.82);
       }
+      @keyframes cardEnter {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes cardEnterLift {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(-6px);
+        }
+      }
+      .reveal .stat,
+      .reveal .ps-col,
+      .reveal .feature,
+      .reveal .score-panel,
+      .reveal .score-result,
+      .reveal .capability-card,
+      .reveal .review,
+      .reveal .plan,
+      .reveal .faq-item {
+        opacity: 0;
+      }
+      .reveal.visible .stat,
+      .reveal.visible .ps-col,
+      .reveal.visible .feature,
+      .reveal.visible .score-panel,
+      .reveal.visible .score-result,
+      .reveal.visible .capability-card,
+      .reveal.visible .review,
+      .reveal.visible .plan,
+      .reveal.visible .faq-item {
+        animation: cardEnter 0.45s ease both;
+      }
+      .reveal.visible .feature:nth-child(2),
+      .reveal.visible .plan:nth-child(2),
+      .reveal.visible .review:nth-child(2),
+      .reveal.visible .capability-card:nth-child(2),
+      .reveal.visible .faq-item:nth-child(2) {
+        animation-delay: 0.05s;
+      }
+      .reveal.visible .feature:nth-child(3),
+      .reveal.visible .plan:nth-child(3),
+      .reveal.visible .review:nth-child(3),
+      .reveal.visible .capability-card:nth-child(3),
+      .reveal.visible .faq-item:nth-child(3) {
+        animation-delay: 0.1s;
+      }
+      .reveal.visible .feature.accent-feature,
+      .reveal.visible .plan.popular {
+        animation-name: cardEnterLift;
+      }
+      .subscore-section {
+        background: #111;
+        color: #fff;
+        overflow: hidden;
+        padding: 72px 0;
+      }
+      .subscore-section .eyebrow {
+        color: var(--accent-2);
+      }
+      .subscore-section .section-sub {
+        color: rgba(255, 255, 255, 0.68);
+      }
+      .subscore-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+        gap: 18px;
+        align-items: stretch;
+        margin-top: 30px;
+      }
+      .score-panel,
+      .score-result {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.055);
+        padding: 22px;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .score-row + .score-row {
+        margin-top: 14px;
+      }
+      .score-row label {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 7px;
+      }
+      .score-row label span:last-child {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .score-row input {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.22);
+        outline: none;
+      }
+      .score-row input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+      }
+      .score-row input::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+      }
+      .score-row input::-moz-range-track {
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.22);
+      }
+      .score-scale {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .score-result {
+        position: relative;
+        display: grid;
+        grid-template-columns: 136px minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        align-content: center;
+        gap: 20px;
+        overflow: hidden;
+      }
+      .score-ring {
+        --score: 48;
+        --score-color: var(--accent);
+        width: 136px;
+        height: 136px;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--score-color) calc(var(--score) * 1%),
+          rgba(255, 255, 255, 0.12) 0
+        );
+        display: grid;
+        place-items: center;
+        align-self: start;
+        transition:
+          background 0.35s ease,
+          transform 0.35s ease;
+      }
+      .score-ring.is-updating {
+        animation: ringUpdate 0.42s ease;
+      }
+      .score-ring-inner {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: #111;
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+      .score-ring b {
+        display: block;
+        font-size: 34px;
+        line-height: 1;
+      }
+      .score-ring span {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .score-copy h3 {
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+      .score-copy p {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 14px;
+        margin-bottom: 14px;
+      }
+      .score-actions {
+        display: grid;
+        grid-column: 1 / -1;
+        gap: 8px;
+      }
+      .score-action {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 13px;
+      }
+      .score-action i {
+        color: var(--accent-2);
+      }
+      .spend-chart {
+        grid-column: 1 / -1;
+        align-self: center;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        gap: 10px;
+        height: 170px;
+        padding-top: 22px;
+      }
+      @keyframes barRise {
+        from {
+          opacity: 0;
+          transform: scaleY(0.25);
+        }
+        to {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+      @keyframes barUpdate {
+        0% {
+          transform: scaleY(1);
+        }
+        45% {
+          transform: scaleY(1.08);
+        }
+        100% {
+          transform: scaleY(1);
+        }
+      }
+      @keyframes barIdle {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(0.965);
+        }
+      }
+      @keyframes ringUpdate {
+        0% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.045);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .spend-bar {
+        --bar: 50%;
+        flex: 0 1 86px;
+        min-height: 24px;
+        max-width: 92px;
+        height: var(--bar);
+        border-radius: 12px 12px 4px 4px;
+        background: var(--accent);
+        transform-origin: bottom;
+        animation:
+          barRise 0.55s ease both,
+          barIdle 4.2s ease-in-out 0.7s infinite;
+        transition: height 0.35s ease;
+      }
+      .spend-bar:nth-child(2) {
+        animation-delay: 0.04s, 1.05s;
+      }
+      .spend-bar:nth-child(3) {
+        animation-delay: 0.08s, 1.4s;
+      }
+      .spend-bar:nth-child(4) {
+        animation-delay: 0.12s, 1.75s;
+      }
+      .spend-bar:nth-child(5) {
+        animation-delay: 0.16s, 2.1s;
+      }
+      .spend-bar.is-updating {
+        animation: barUpdate 0.32s ease;
+      }
+      .spend-bar span {
+        display: block;
+        transform: translateY(calc(-100% - 6px));
+        color: rgba(255, 255, 255, 0.56);
+        font-size: 11px;
+        text-align: center;
+      }
+      .capability-section {
+        background: #fff;
+      }
+      .capability-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+        align-items: center;
+        gap: 24px;
+        margin-top: 50px;
+      }
+      .capability-list {
+        display: grid;
+        gap: 16px;
+        align-self: center;
+      }
+      .capability-card {
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: #fff;
+        overflow: hidden;
+        align-self: start;
+        transition:
+          border-color 0.34s ease,
+          box-shadow 0.42s ease,
+          transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .capability-card:hover,
+      .capability-card.open {
+        border-color: rgba(255, 90, 0, 0.35);
+        box-shadow: 0 20px 44px rgba(255, 90, 0, 0.08);
+        transform: translateY(-3px);
+      }
+      .capability-card summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px;
+      }
+      .capability-card summary::-webkit-details-marker {
+        display: none;
+      }
+      .capability-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .capability-title i {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: #fff1e8;
+        color: var(--accent);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+      }
+      .capability-title b {
+        display: block;
+        font-size: 19px;
+      }
+      .capability-card summary > i {
+        color: var(--accent);
+        transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .capability-card.open summary > i {
+        transform: rotate(45deg);
+      }
+      .capability-card.is-closing summary > i {
+        transform: rotate(0);
+      }
+      .capability-body {
+        --body-height: 0px;
+        border-top: 1px solid var(--border);
+        max-height: var(--body-height);
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-8px);
+        padding: 0 24px;
+        color: var(--muted);
+        transition:
+          max-height 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.36s ease,
+          transform 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+          padding-bottom 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .capability-card.open .capability-body {
+        max-height: var(--body-height);
+        opacity: 1;
+        transform: translateY(0);
+        padding-bottom: 30px;
+      }
+      .capability-card.is-closing .capability-body {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+        padding-bottom: 0;
+      }
+      .capability-body p {
+        margin-top: 18px;
+      }
+      .capability-body ul {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+        padding-bottom: 2px;
+      }
+      .capability-body li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .capability-body li i {
+        color: var(--green);
+        margin-top: 4px;
+      }
+      .capability-showcase {
+        --carousel-offset: 0px;
+        align-self: center;
+        min-height: 300px;
+        background: transparent;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 0;
+      }
+      .showcase-lane {
+        position: relative;
+        overflow: hidden;
+        margin: -10px 0;
+        padding: 22px 0;
+      }
+      .showcase-lane::before,
+      .showcase-lane::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 22%;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .showcase-lane::before {
+        left: 0;
+        background: linear-gradient(
+          to right,
+          #fff 0%,
+          rgba(255, 255, 255, 0.92) 20%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      }
+      .showcase-lane::after {
+        right: 0;
+        background: linear-gradient(
+          to left,
+          #fff 0%,
+          rgba(255, 255, 255, 0.92) 20%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      }
+      .showcase-row {
+        display: flex;
+        gap: 14px;
+        width: max-content;
+        will-change: transform;
+        transition: opacity 0.24s ease;
+      }
+      .showcase-row[data-showcase-row="top"] {
+        transform: translate3d(calc(-150px + var(--carousel-offset)), 0, 0);
+      }
+      .showcase-row[data-showcase-row="bottom"] {
+        transform: translate3d(calc(-585px - var(--carousel-offset)), 0, 0);
+      }
+      .showcase-row.is-switching {
+        opacity: 0.35;
+      }
+      .showcase-card {
+        flex: 0 0 150px;
+        height: 86px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid var(--border);
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 12px 26px rgba(26, 26, 26, 0.08);
+      }
+      .showcase-card img {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        object-fit: contain;
+        flex: 0 0 auto;
+      }
+      .showcase-card b {
+        display: block;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.2;
+      }
+      .showcase-card > span {
+        min-width: 0;
+      }
       .authors {
         background: var(--text);
         color: #fff;
@@ -953,18 +1464,24 @@
         border-radius: 22px;
         padding: 30px 26px;
         position: relative;
-        transition: all 0.25s;
+        transition:
+          transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.42s ease,
+          border-color 0.28s ease;
         display: flex;
         flex-direction: column;
       }
       .plan:hover {
-        transform: translateY(-6px);
+        transform: translateY(-8px) !important;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
       }
       .plan.popular {
         border-color: var(--accent);
         transform: translateY(-6px);
         box-shadow: 0 20px 50px rgba(255, 90, 0, 0.14);
+      }
+      .plan.popular:hover {
+        transform: translateY(-10px) !important;
       }
       .plan-badge {
         position: absolute;
@@ -1189,7 +1706,8 @@
         font-size: 14px;
         color: var(--muted);
       }
-      .foot-bottom .legal a {
+      .foot-bottom .legal a,
+      .foot-bottom .legal span {
         color: var(--muted);
         margin-left: 18px;
       }
@@ -1214,6 +1732,11 @@
         opacity: 1;
         animation: modalFade 0.28s ease both;
       }
+      .modal-overlay.closing {
+        display: flex;
+        pointer-events: none;
+        animation: modalFadeOut 0.24s ease both;
+      }
       .modal {
         background: #fff;
         border-radius: 24px;
@@ -1232,6 +1755,14 @@
           opacity: 1;
         }
       }
+      @keyframes modalFadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
       @keyframes modalPop {
         from {
           transform: translateY(24px) scale(0.94);
@@ -1240,6 +1771,19 @@
         to {
           transform: translateY(0) scale(1);
           opacity: 1;
+        }
+      }
+      .modal-overlay.closing .modal {
+        animation: modalPopOut 0.24s ease both;
+      }
+      @keyframes modalPopOut {
+        from {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(16px) scale(0.96);
+          opacity: 0;
         }
       }
       .modal-close {
@@ -1331,6 +1875,16 @@
         .features,
         .reviews {
           grid-template-columns: 1fr 1fr;
+        }
+        .capability-grid {
+          grid-template-columns: 1fr;
+        }
+        .capability-showcase {
+          min-height: 320px;
+        }
+        .subscore-grid,
+        .score-result {
+          grid-template-columns: 1fr;
         }
         .pricing {
           grid-template-columns: 1fr 1fr;
@@ -1479,6 +2033,8 @@
           font-size: 14px;
         }
         #features,
+        #subscore,
+        #capabilities,
         #authors,
         #pricing,
         #faq,
@@ -1551,6 +2107,7 @@
         }
         .features,
         .reviews,
+        .capability-grid,
         .pricing,
         .ps-cols,
         .steps,
@@ -1565,6 +2122,155 @@
         .stats::before,
         .stats::after {
           display: none;
+        }
+        .score-panel,
+        .score-result {
+          padding: 22px;
+        }
+        .score-ring {
+          width: 154px;
+          height: 154px;
+        }
+        .score-ring-inner {
+          width: 114px;
+          height: 114px;
+        }
+        .score-ring b {
+          font-size: 36px;
+        }
+        .spend-chart {
+          height: 130px;
+          gap: 8px;
+        }
+        .spend-bar {
+          flex-basis: 54px;
+          max-width: 58px;
+          border-radius: 10px 10px 4px 4px;
+        }
+        .capability-grid {
+          gap: 22px;
+          margin-top: 34px;
+        }
+        .capability-list {
+          gap: 14px;
+        }
+        .capability-showcase {
+          min-height: 260px;
+          border-radius: 20px;
+          gap: 14px;
+        }
+        .showcase-lane::before,
+        .showcase-lane::after {
+          width: 18%;
+        }
+        .showcase-card {
+          flex-basis: 132px;
+          height: 76px;
+          border-radius: 15px;
+          padding: 12px;
+        }
+        .showcase-card img {
+          width: 32px;
+          height: 32px;
+        }
+        .showcase-card b {
+          font-size: 13px;
+        }
+        .showcase-card span {
+          font-size: 10px;
+        }
+        .capability-card summary {
+          align-items: flex-start;
+          gap: 12px;
+          padding: 18px;
+        }
+        .capability-title {
+          gap: 12px;
+          align-items: center;
+        }
+        .capability-title i {
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          flex-basis: 42px;
+        }
+        .capability-title b {
+          font-size: 17px;
+        }
+        .capability-card summary > i {
+          margin-top: 12px;
+        }
+        .capability-body {
+          padding: 0 18px;
+        }
+        .capability-card.open .capability-body {
+          padding-bottom: 28px;
+        }
+        .capability-body p {
+          margin-top: 16px;
+          font-size: 15px;
+        }
+        .capability-body ul {
+          gap: 9px;
+          margin-top: 14px;
+        }
+        .capability-body li {
+          font-size: 15px;
+        }
+        .compare-wrap {
+          border: 0;
+          border-radius: 0;
+          overflow: visible;
+        }
+        .compare-wrap table,
+        .compare-wrap thead,
+        .compare-wrap tbody,
+        .compare-wrap tr,
+        .compare-wrap td {
+          display: block;
+          width: 100%;
+        }
+        .compare-wrap thead {
+          display: none;
+        }
+        .compare-wrap tbody tr {
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          padding: 16px 18px;
+          margin-bottom: 14px;
+          background: #fff;
+        }
+        .compare-wrap td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 18px;
+          padding: 8px 0;
+          font-size: 14px;
+        }
+        .compare-wrap td:first-child {
+          display: block;
+          padding: 0 0 10px;
+          font-size: 17px;
+          color: var(--text);
+        }
+        .compare-wrap td:nth-child(2)::before {
+          content: "Boosty";
+          color: var(--muted);
+          font-weight: 700;
+        }
+        .compare-wrap td:nth-child(3)::before {
+          content: "Patreon";
+          color: var(--muted);
+          font-weight: 700;
+        }
+        .compare-wrap td:nth-child(4)::before {
+          content: "Submart";
+          color: var(--accent);
+          font-weight: 700;
+        }
+        .compare-wrap .tcol-us {
+          background: transparent;
         }
         table {
           font-size: 13px;
@@ -1583,27 +2289,18 @@
           <span class="logo-mark">
             <img src="submart-logo.png" alt="Submart" />
           </span>
-          Submart
         </a>
         <nav class="nav-links" id="navLinks">
           <a href="#features">Для пользователей</a>
           <a href="#authors">Для авторов</a>
           <a href="#pricing">Тарифы</a>
           <a href="#faq">FAQ</a>
-          <a href="#blog">Блог</a>
-          <button
-            type="button"
-            class="nav-login-mobile"
-            onclick="toast('Форма входа скоро будет доступна')"
-          >
+          <button type="button" class="nav-login-mobile" onclick="openLogin()">
             Войти
           </button>
         </nav>
         <div class="nav-actions">
-          <button
-            class="btn btn-ghost btn-text"
-            onclick="toast('Форма входа скоро будет доступна')"
-          >
+          <button class="btn btn-ghost btn-text" onclick="openLogin()">
             Войти
           </button>
           <button class="btn btn-primary" onclick="openAuthor()">
@@ -1864,6 +2561,231 @@
       </div>
     </section>
 
+    <section class="subscore-section" id="subscore">
+      <div class="container reveal">
+        <span class="eyebrow"
+          ><i class="fa-solid fa-wave-square"></i> Подписочный индекс</span
+        >
+        <h2 class="section-title">Качество трат на подписки</h2>
+        <div class="subscore-grid">
+          <div class="score-panel">
+            <div class="score-row">
+              <label for="scoreForgot">Триалы отменяются вовремя</label>
+              <input
+                id="scoreForgot"
+                data-score-input
+                data-good="high"
+                type="range"
+                min="1"
+                max="5"
+                value="3"
+              />
+              <div class="score-scale">
+                <span>редко</span><span>всегда</span>
+              </div>
+            </div>
+            <div class="score-row">
+              <label for="scoreDead">Неиспользуемые сервисы</label>
+              <input
+                id="scoreDead"
+                data-score-input
+                data-good="low"
+                type="range"
+                min="1"
+                max="5"
+                value="2"
+              />
+              <div class="score-scale"><span>нет</span><span>много</span></div>
+            </div>
+            <div class="score-row">
+              <label for="scoreBudget">Месячный бюджет понятен</label>
+              <input
+                id="scoreBudget"
+                data-score-input
+                data-good="high"
+                type="range"
+                min="1"
+                max="5"
+                value="4"
+              />
+              <div class="score-scale"><span>нет</span><span>да</span></div>
+            </div>
+            <div class="score-row">
+              <label for="scoreDupes">Дубли подписок</label>
+              <input
+                id="scoreDupes"
+                data-score-input
+                data-good="low"
+                type="range"
+                min="1"
+                max="5"
+                value="2"
+              />
+              <div class="score-scale"><span>нет</span><span>много</span></div>
+            </div>
+            <div class="score-row">
+              <label for="scorePrices">Повышение цен отслеживается</label>
+              <input
+                id="scorePrices"
+                data-score-input
+                data-good="high"
+                type="range"
+                min="1"
+                max="5"
+                value="3"
+              />
+              <div class="score-scale"><span>нет</span><span>да</span></div>
+            </div>
+          </div>
+          <div class="score-result">
+            <div class="score-ring" id="scoreRing">
+              <div class="score-ring-inner">
+                <div>
+                  <b id="scoreValue">64</b>
+                  <span>из 100</span>
+                </div>
+              </div>
+            </div>
+            <div class="score-copy">
+              <h3 id="scorePersona">Есть запас</h3>
+              <p id="scoreText">
+                Бюджет понятен, но часть подписок стоит пересмотреть.
+              </p>
+              <div class="score-actions">
+                <div class="score-action">
+                  <i class="fa-solid fa-bell"></i>
+                  <span id="scoreTipOne">Триалы</span>
+                </div>
+                <div class="score-action">
+                  <i class="fa-solid fa-chart-simple"></i>
+                  <span id="scoreTipTwo">Дубли</span>
+                </div>
+                <div class="score-action">
+                  <i class="fa-solid fa-tag"></i>
+                  <span id="scoreTipThree">Цены</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="spend-chart"
+              id="spendChart"
+              aria-label="Диаграмма качества трат"
+            >
+              <div class="spend-bar" data-bar="scoreForgot">
+                <span>Триалы</span>
+              </div>
+              <div class="spend-bar" data-bar="scoreDead">
+                <span>Активность</span>
+              </div>
+              <div class="spend-bar" data-bar="scoreBudget">
+                <span>Бюджет</span>
+              </div>
+              <div class="spend-bar" data-bar="scoreDupes">
+                <span>Дубли</span>
+              </div>
+              <div class="spend-bar" data-bar="scorePrices">
+                <span>Цены</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="capability-section" id="capabilities">
+      <div class="container reveal">
+        <span class="eyebrow"
+          ><i class="fa-solid fa-layer-group"></i> Что внутри продукта</span
+        >
+        <h2 class="section-title">Функции Submart</h2>
+        <div class="capability-grid">
+          <div class="capability-list">
+            <details class="capability-card" data-showcase="import">
+              <summary>
+                <span class="capability-title">
+                  <i class="fa-solid fa-building-columns"></i>
+                  <span>
+                    <b>Импорт из банка и почты</b>
+                  </span>
+                </span>
+                <i class="fa-solid fa-plus"></i>
+              </summary>
+              <div class="capability-body">
+                <p>
+                  Подписки можно добавить вручную или подтянуть из платежей и
+                  чеков.
+                </p>
+                <ul>
+                  <li><i class="fa-solid fa-check"></i> регулярные платежи;</li>
+                  <li><i class="fa-solid fa-check"></i> письма и чеки;</li>
+                  <li><i class="fa-solid fa-check"></i> история оплат.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="capability-card" data-showcase="calendar">
+              <summary>
+                <span class="capability-title">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>
+                    <b>Календарь списаний и триалов</b>
+                  </span>
+                </span>
+                <i class="fa-solid fa-plus"></i>
+              </summary>
+              <div class="capability-body">
+                <p>
+                  Календарь показывает ближайшие списания, суммы и дату
+                  окончания триала.
+                </p>
+                <ul>
+                  <li><i class="fa-solid fa-check"></i> платежи по дням;</li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> триалы с напоминаниями;
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> фильтры по сервисам.
+                  </li>
+                </ul>
+              </div>
+            </details>
+            <details class="capability-card" data-showcase="health">
+              <summary>
+                <span class="capability-title">
+                  <i class="fa-solid fa-heart-pulse"></i>
+                  <span>
+                    <b>Индекс здоровья подписок</b>
+                  </span>
+                </span>
+                <i class="fa-solid fa-plus"></i>
+              </summary>
+              <div class="capability-body">
+                <p>
+                  Индекс учитывает активность, бюджет, дубли и изменение цен.
+                </p>
+                <ul>
+                  <li><i class="fa-solid fa-check"></i> качество расходов;</li>
+                  <li><i class="fa-solid fa-check"></i> прогноз на год;</li>
+                  <li><i class="fa-solid fa-check"></i> точки экономии.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+          <div
+            class="capability-showcase"
+            id="capabilityShowcase"
+            aria-hidden="true"
+          >
+            <div class="showcase-lane">
+              <div class="showcase-row" data-showcase-row="top"></div>
+            </div>
+            <div class="showcase-lane">
+              <div class="showcase-row" data-showcase-row="bottom"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="authors" id="authors">
       <div class="container reveal">
         <span class="eyebrow"
@@ -1879,7 +2801,8 @@
             <div class="feature-ic"><i class="fa-solid fa-coins"></i></div>
             <h3>Прозрачная комиссия</h3>
             <p>
-              Никаких скрытых платежей. Вы видите каждый рубль — от 5% до 7%.
+              Вы платите фиксированный тариф до дохода в 50 000 рублей в месяц,
+              далее — плюс 5%.
             </p>
           </div>
           <div class="feature">
@@ -1954,7 +2877,7 @@
                 <td>Комиссия</td>
                 <td>11,7%+</td>
                 <td>8–12%</td>
-                <td class="tcol-us check">5–7%</td>
+                <td class="tcol-us check">1 990 ₽/мес + 5% после 50 000 ₽</td>
               </tr>
               <tr>
                 <td>Выплаты</td>
@@ -2112,7 +3035,7 @@
           </div>
           <div class="plan">
             <h3>Бизнес</h3>
-            <div class="price">3 990 ₽ <span>/мес</span></div>
+            <div class="price">1 990 ₽ <span>/мес</span></div>
             <ul>
               <li><i class="fa-solid fa-check"></i> Создание подписок</li>
               <li><i class="fa-solid fa-check"></i> Публикации в ленте</li>
@@ -2177,8 +3100,8 @@
               Какая комиссия для авторов? <i class="fa-solid fa-plus"></i>
             </div>
             <div class="faq-a">
-              Прозрачная комиссия от 5% до 7% в зависимости от тарифа. Никаких
-              скрытых платежей.
+              До дохода в 50 000 ₽ в месяц автор платит фиксированный тариф,
+              далее — плюс 5%.
             </div>
           </div>
           <div class="faq-item" onclick="this.classList.toggle('open')">
@@ -2202,7 +3125,6 @@
               <span class="logo-mark"
                 ><img src="submart-logo.png" alt="Submart"
               /></span>
-              Submart
             </a>
             <p>
               Управляйте подписками и зарабатывайте на контенте — всё в одном
@@ -2245,19 +3167,17 @@
           <div class="foot-col">
             <h4>Контакты</h4>
             <a href="mailto:support@moipodpiski.ru">support@moipodpiski.ru</a>
-            <a onclick="toast('Открываем чат поддержки')">Чат поддержки</a>
-            <a onclick="toast('Раздел блога в разработке')">Блог</a>
+            <a href="mailto:support@moipodpiski.ru?subject=Поддержка"
+              >Чат поддержки</a
+            >
+            <a href="#blog">Блог</a>
           </div>
         </div>
         <div class="foot-bottom">
           <span>© 2026 Submart. Все права защищены.</span>
           <span class="legal">
-            <a onclick="toast('Открываем документ')"
-              >Политика конфиденциальности</a
-            >
-            <a onclick="toast('Открываем документ')"
-              >Пользовательское соглашение</a
-            >
+            <span>Политика конфиденциальности</span>
+            <span>Пользовательское соглашение</span>
           </span>
         </div>
       </div>
@@ -2273,10 +3193,6 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
         <h3>Стать автором</h3>
-        <p>
-          Заполните форму — комиссия от 5%, выплаты за 24 часа. Мы свяжемся с
-          вами.
-        </p>
         <form onsubmit="submitAuthor(event)">
           <label>Имя</label>
           <input type="text" required placeholder="Как вас зовут" />
@@ -2364,48 +3280,12 @@
       window.addEventListener("load", updateScrollEffects);
       updateScrollEffects();
 
-      let smoothTarget = window.scrollY;
-      let smoothCurrent = window.scrollY;
-      let smoothRunning = false;
       function maxScrollY() {
         return Math.max(
           0,
           document.documentElement.scrollHeight - window.innerHeight,
         );
       }
-      function runSmoothScroll() {
-        smoothCurrent += (smoothTarget - smoothCurrent) * 0.115;
-        if (Math.abs(smoothTarget - smoothCurrent) < 0.35) {
-          smoothCurrent = smoothTarget;
-          smoothRunning = false;
-        }
-        window.scrollTo(0, smoothCurrent);
-        if (smoothRunning) window.requestAnimationFrame(runSmoothScroll);
-      }
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!smoothRunning) {
-            smoothTarget = window.scrollY;
-            smoothCurrent = window.scrollY;
-          }
-        },
-        { passive: true },
-      );
-      window.addEventListener(
-        "wheel",
-        (e) => {
-          if (e.ctrlKey || window.innerWidth <= 720) return;
-          e.preventDefault();
-          smoothTarget = clamp(smoothTarget + e.deltaY, 0, maxScrollY());
-          if (!smoothRunning) {
-            smoothCurrent = window.scrollY;
-            smoothRunning = true;
-            window.requestAnimationFrame(runSmoothScroll);
-          }
-        },
-        { passive: false },
-      );
 
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
         link.addEventListener("click", (e) => {
@@ -2413,16 +3293,12 @@
           if (!target) return;
           e.preventDefault();
           const offset = window.innerWidth <= 1048 ? 84 : 104;
-          smoothTarget = clamp(
+          const targetY = clamp(
             target.getBoundingClientRect().top + window.scrollY - offset,
             0,
             maxScrollY(),
           );
-          if (!smoothRunning) {
-            smoothCurrent = window.scrollY;
-            smoothRunning = true;
-            window.requestAnimationFrame(runSmoothScroll);
-          }
+          window.scrollTo({ top: targetY, behavior: "smooth" });
         });
       });
 
@@ -2494,6 +3370,223 @@
         .querySelectorAll(".reveal")
         .forEach((el) => observer.observe(el));
 
+      const showcaseSets = {
+        services: [
+          ["Кинопоиск", "Подписка", "kinopoisk.ru"],
+          ["Яндекс Плюс", "Экосистема", "plus.yandex.ru"],
+          ["Netflix", "Видео", "netflix.com"],
+          ["Spotify", "Музыка", "spotify.com"],
+          ["YouTube", "Видео", "youtube.com"],
+          ["Okko", "Кино", "okko.tv"],
+          ["IVI", "Кино", "ivi.ru"],
+          ["Wink", "Кино", "wink.ru"],
+          ["KION", "Кино", "kion.ru"],
+          ["START", "Кино", "start.ru"],
+          ["Premier", "Видео", "premier.one"],
+          ["Apple Music", "Музыка", "music.apple.com"],
+          ["VK Музыка", "Музыка", "vk.com"],
+          ["Литрес", "Книги", "litres.ru"],
+          ["Bookmate", "Книги", "bookmate.ru"],
+          ["Dropbox", "Облако", "dropbox.com"],
+          ["Google One", "Облако", "one.google.com"],
+          ["Adobe", "Софт", "adobe.com"],
+          ["Canva", "Дизайн", "canva.com"],
+          ["Figma", "Дизайн", "figma.com"],
+        ],
+        import: [
+          ["Т-Банк", "Банк", "tbank.ru"],
+          ["Сбер", "Банк", "sberbank.ru"],
+          ["Альфа-Банк", "Банк", "alfabank.ru"],
+          ["ВТБ", "Банк", "vtb.ru"],
+          ["Озон Банк", "Банк", "finance.ozon.ru"],
+          ["Райффайзен", "Банк", "raiffeisen.ru"],
+          ["Gmail", "Почта", "gmail.com"],
+          ["Mail.ru", "Почта", "mail.ru"],
+          ["Яндекс Почта", "Почта", "mail.yandex.ru"],
+          ["Outlook", "Почта", "outlook.live.com"],
+          ["Proton Mail", "Почта", "proton.me"],
+          ["ЮKassa", "Платежи", "yookassa.ru"],
+          ["Robokassa", "Платежи", "robokassa.com"],
+          ["CloudPayments", "Платежи", "cloudpayments.ru"],
+          ["Stripe", "Платежи", "stripe.com"],
+          ["PayPal", "Платежи", "paypal.com"],
+        ],
+        calendar: [
+          ["Google Calendar", "Календарь", "calendar.google.com"],
+          ["Outlook", "Календарь", "outlook.live.com"],
+          ["Todoist", "Напоминания", "todoist.com"],
+          ["Notion", "Планирование", "notion.so"],
+          ["Telegram", "Уведомления", "telegram.org"],
+          ["Яндекс", "Календарь", "yandex.ru"],
+          ["Apple", "Календарь", "icloud.com"],
+          ["RuStore", "Приложения", "rustore.ru"],
+          ["Google Play", "Приложения", "play.google.com"],
+          ["App Store", "Приложения", "apple.com"],
+          ["Slack", "Уведомления", "slack.com"],
+          ["Trello", "Планирование", "trello.com"],
+          ["Asana", "Задачи", "asana.com"],
+          ["ClickUp", "Задачи", "clickup.com"],
+          ["Miro", "Команды", "miro.com"],
+          ["Jira", "Команды", "atlassian.com"],
+        ],
+        health: [
+          ["Netflix", "Видео", "netflix.com"],
+          ["Okko", "Видео", "okko.tv"],
+          ["IVI", "Видео", "ivi.ru"],
+          ["Wink", "Видео", "wink.ru"],
+          ["START", "Видео", "start.ru"],
+          ["Spotify", "Музыка", "spotify.com"],
+          ["Яндекс Плюс", "Экосистема", "plus.yandex.ru"],
+          ["VK Музыка", "Музыка", "vk.com"],
+          ["Литрес", "Книги", "litres.ru"],
+          ["Bookmate", "Книги", "bookmate.ru"],
+          ["Dropbox", "Облако", "dropbox.com"],
+          ["Google One", "Облако", "one.google.com"],
+          ["Adobe", "Софт", "adobe.com"],
+          ["Canva", "Дизайн", "canva.com"],
+          ["Figma", "Дизайн", "figma.com"],
+          ["GitHub", "Софт", "github.com"],
+        ],
+      };
+      const showcase = document.getElementById("capabilityShowcase");
+      const showcaseRows = document.querySelectorAll("[data-showcase-row]");
+      const favicon = (domain) =>
+        `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+      let activeShowcase = "services";
+      let carouselOffset = 0;
+      let carouselTargetOffset = 0;
+      let lastScrollY = window.scrollY;
+      let carouselAnimating = false;
+      const carouselLoop = 1640;
+
+      function normalizeCarouselOffset(value) {
+        return (
+          ((((value + carouselLoop / 2) % carouselLoop) + carouselLoop) %
+            carouselLoop) -
+          carouselLoop / 2
+        );
+      }
+
+      function renderShowcase(type = "services") {
+        if (!showcaseRows.length) return;
+        activeShowcase = showcaseSets[type] ? type : "services";
+        const items = showcaseSets[activeShowcase];
+        const splitIndex = Math.ceil(items.length / 2);
+        const rows = [
+          [...items, ...items],
+          [...items.slice(splitIndex), ...items.slice(0, splitIndex), ...items],
+        ];
+        const renderCards = (cards) =>
+          cards
+            .map(
+              ([name, meta, domain]) => `
+              <div class="showcase-card">
+                <img src="${favicon(domain)}" alt="" width="36" height="36" loading="lazy" />
+                <span><b>${name}</b></span>
+              </div>`,
+            )
+            .join("");
+        showcaseRows.forEach((row, index) => {
+          row.classList.add("is-switching");
+          row.innerHTML = renderCards(rows[index] || rows[0]);
+          window.setTimeout(() => row.classList.remove("is-switching"), 180);
+        });
+      }
+
+      function animateCarouselOffset() {
+        carouselOffset += (carouselTargetOffset - carouselOffset) * 0.12;
+        showcase?.style.setProperty(
+          "--carousel-offset",
+          `${normalizeCarouselOffset(carouselOffset)}px`,
+        );
+        if (Math.abs(carouselTargetOffset - carouselOffset) > 0.15) {
+          window.requestAnimationFrame(animateCarouselOffset);
+          return;
+        }
+        carouselOffset = carouselTargetOffset;
+        showcase?.style.setProperty(
+          "--carousel-offset",
+          `${normalizeCarouselOffset(carouselOffset)}px`,
+        );
+        carouselAnimating = false;
+      }
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          const delta = window.scrollY - lastScrollY;
+          lastScrollY = window.scrollY;
+          if (!showcase || Math.abs(delta) < 0.5) return;
+          carouselTargetOffset += delta * 0.42;
+          if (Math.abs(carouselTargetOffset) > carouselLoop * 8) {
+            carouselTargetOffset =
+              normalizeCarouselOffset(carouselTargetOffset);
+            carouselOffset = normalizeCarouselOffset(carouselOffset);
+          }
+          if (!carouselAnimating) {
+            carouselAnimating = true;
+            window.requestAnimationFrame(animateCarouselOffset);
+          }
+        },
+        { passive: true },
+      );
+
+      function closeCapabilityCard(card) {
+        const body = card.querySelector(".capability-body");
+        if (body) {
+          body.style.setProperty("--body-height", `${body.scrollHeight}px`);
+          void body.offsetHeight;
+          body.style.setProperty("--body-height", "0px");
+        }
+        card.classList.remove("open");
+        card.classList.add("is-closing");
+        window.setTimeout(() => {
+          card.open = false;
+          card.classList.remove("is-closing");
+        }, 520);
+      }
+
+      function openCapabilityCard(card) {
+        const body = card.querySelector(".capability-body");
+        const openPadding = window.matchMedia("(max-width: 720px)").matches
+          ? 28
+          : 30;
+        card.open = true;
+        window.requestAnimationFrame(() => {
+          if (body) {
+            body.style.setProperty(
+              "--body-height",
+              `${body.scrollHeight + openPadding}px`,
+            );
+          }
+          card.classList.add("open");
+        });
+      }
+
+      document
+        .querySelectorAll(".capability-card summary")
+        .forEach((summary) => {
+          summary.addEventListener("click", (event) => {
+            event.preventDefault();
+            const card = summary.parentElement;
+            if (!card) return;
+            const isOpen = card.open || card.classList.contains("open");
+            document
+              .querySelectorAll(".capability-card.open")
+              .forEach((other) => {
+                if (other !== card) closeCapabilityCard(other);
+              });
+            if (isOpen) {
+              closeCapabilityCard(card);
+              renderShowcase("services");
+            } else {
+              openCapabilityCard(card);
+              renderShowcase(card.dataset.showcase || "services");
+            }
+          });
+        });
+      renderShowcase();
+
       let toastTimer;
       function toast(msg) {
         document.getElementById("toastMsg").textContent = msg;
@@ -2503,7 +3596,113 @@
         toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
       }
       function store(name) {
-        toast("Открываем " + name + "...");
+        toast(name);
+      }
+
+      const scoreInputs = document.querySelectorAll("[data-score-input]");
+      const scoreRing = document.getElementById("scoreRing");
+      const scoreValue = document.getElementById("scoreValue");
+      const scorePersona = document.getElementById("scorePersona");
+      const scoreText = document.getElementById("scoreText");
+      const scoreTipOne = document.getElementById("scoreTipOne");
+      const scoreTipTwo = document.getElementById("scoreTipTwo");
+      const scoreTipThree = document.getElementById("scoreTipThree");
+      const spendBars = document.querySelectorAll("[data-bar]");
+      const scoreProfiles = [
+        {
+          min: 75,
+          color: "var(--accent)",
+          title: "Высокое качество",
+          text: "Подписки работают на пользу, лишних списаний почти нет.",
+          tips: [
+            "Триалы под контролем",
+            "Дубли проверены",
+            "Цены отслеживаются",
+          ],
+        },
+        {
+          min: 45,
+          color: "var(--accent)",
+          title: "Есть запас",
+          text: "Бюджет понятен, но часть подписок стоит пересмотреть.",
+          tips: ["Проверить триалы", "Убрать дубли", "Сверить цены"],
+        },
+        {
+          min: 0,
+          color: "var(--red)",
+          title: "Нужна ревизия",
+          text: "Есть риск платить за лишнее. Начните с триалов и дублей.",
+          tips: ["Остановить триалы", "Проверить активность", "Задать лимит"],
+        },
+      ];
+
+      function updateSubscriptionScore() {
+        if (!scoreInputs.length || !scoreRing || !scoreValue) return;
+        const qualityValues = Array.from(scoreInputs).map((input) => {
+          const value = Number(input.value);
+          return input.dataset.good === "low" ? 6 - value : value;
+        });
+        const total = qualityValues.reduce((sum, value) => sum + value, 0);
+        const score = Math.round((total / (scoreInputs.length * 5)) * 100);
+        const profile =
+          scoreProfiles.find((item) => score >= item.min) ||
+          scoreProfiles[scoreProfiles.length - 1];
+
+        scoreRing.style.setProperty("--score", score);
+        scoreRing.style.setProperty("--score-color", profile.color);
+        scoreRing.classList.remove("is-updating");
+        void scoreRing.offsetWidth;
+        scoreRing.classList.add("is-updating");
+        window.setTimeout(() => scoreRing.classList.remove("is-updating"), 430);
+        scoreValue.textContent = score;
+        scorePersona.textContent = profile.title;
+        scoreText.textContent = profile.text;
+        scoreTipOne.textContent = profile.tips[0];
+        scoreTipTwo.textContent = profile.tips[1];
+        scoreTipThree.textContent = profile.tips[2];
+        spendBars.forEach((bar) => {
+          const input = document.getElementById(bar.dataset.bar);
+          if (!input) return;
+          const value =
+            input.dataset.good === "low"
+              ? 6 - Number(input.value)
+              : Number(input.value);
+          bar.style.setProperty("--bar", `${value * 20}%`);
+          bar.classList.remove("is-updating");
+          void bar.offsetWidth;
+          bar.classList.add("is-updating");
+          window.setTimeout(() => bar.classList.remove("is-updating"), 330);
+        });
+      }
+
+      scoreInputs.forEach((input) => {
+        input.addEventListener("input", updateSubscriptionScore);
+      });
+      updateSubscriptionScore();
+
+      function openLogin() {
+        const modal = document.getElementById("authorModal");
+        const inner = document.getElementById("authorModalInner");
+        inner.innerHTML = `<button class="modal-close" onclick="closeAuthor()"><i class="fa-solid fa-xmark"></i></button>
+                <h3>Войти</h3>
+                <form onsubmit="submitLogin(event)">
+                    <label>Email</label><input type="email" required placeholder="you@email.ru">
+                    <label>Пароль</label><input type="password" required placeholder="Введите пароль">
+                    <button type="submit" class="btn btn-primary">Войти <i class="fa-solid fa-arrow-right"></i></button>
+                </form>`;
+        modal.classList.add("show");
+      }
+
+      function submitLogin(e) {
+        e.preventDefault();
+        document.getElementById("authorModalInner").innerHTML = `
+                <button class="modal-close" onclick="closeAuthor()"><i class="fa-solid fa-xmark"></i></button>
+                <div class="modal-success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h3>Готово</h3>
+                    <p>Вход выполнен.</p>
+                    <button class="btn btn-primary" onclick="closeAuthor()">Закрыть</button>
+                </div>`;
       }
 
       function openAuthor() {
@@ -2512,9 +3711,12 @@
       function closeAuthor() {
         const m = document.getElementById("authorModal");
         const inner = document.getElementById("authorModalInner");
-        inner.innerHTML = `<button class="modal-close" onclick="closeAuthor()"><i class="fa-solid fa-xmark"></i></button>
+        if (!m.classList.contains("show")) return;
+        m.classList.remove("show");
+        m.classList.add("closing");
+        window.setTimeout(() => {
+          inner.innerHTML = `<button class="modal-close" onclick="closeAuthor()"><i class="fa-solid fa-xmark"></i></button>
                 <h3>Стать автором</h3>
-                <p>Заполните форму — комиссия от 5%, выплаты за 24 часа. Мы свяжемся с вами.</p>
                 <form onsubmit="submitAuthor(event)">
                     <label>Имя</label><input type="text" required placeholder="Как вас зовут">
                     <label>Email</label><input type="email" required placeholder="you@email.ru">
@@ -2522,7 +3724,8 @@
                     <select required><option value="">Выберите...</option><option>Блог / тексты</option><option>Видео</option><option>Подкаст / аудио</option><option>Музыка</option><option>Онлайн-курсы</option><option>Другое</option></select>
                     <button type="submit" class="btn btn-primary">Отправить заявку <i class="fa-solid fa-arrow-right"></i></button>
                 </form>`;
-        m.classList.remove("show");
+          m.classList.remove("closing");
+        }, 240);
       }
       function submitAuthor(e) {
         e.preventDefault();
