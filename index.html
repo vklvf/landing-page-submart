@@ -884,12 +884,17 @@
         font-weight: 600;
       }
       .score-row input {
+        --fill: 50%;
         -webkit-appearance: none;
         appearance: none;
         width: 100%;
         height: 4px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.22);
+        background: linear-gradient(
+          to right,
+          var(--accent) 0 var(--fill),
+          rgba(255, 255, 255, 0.22) var(--fill) 100%
+        );
         outline: none;
       }
       .score-row input::-webkit-slider-thumb {
@@ -913,6 +918,11 @@
         height: 4px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.22);
+      }
+      .score-row input::-moz-range-progress {
+        height: 4px;
+        border-radius: 999px;
+        background: var(--accent);
       }
       .score-scale {
         display: flex;
@@ -3315,6 +3325,33 @@
         );
       }
 
+      let anchorScrollFrame = 0;
+      let anchorTargetY = window.scrollY;
+      let anchorCurrentY = window.scrollY;
+      let anchorScrollRunning = false;
+
+      function runAnchorScroll() {
+        anchorCurrentY += (anchorTargetY - anchorCurrentY) * 0.105;
+        if (Math.abs(anchorTargetY - anchorCurrentY) < 0.45) {
+          anchorCurrentY = anchorTargetY;
+          anchorScrollRunning = false;
+        }
+        window.scrollTo(0, anchorCurrentY);
+        if (anchorScrollRunning) {
+          anchorScrollFrame = requestAnimationFrame(runAnchorScroll);
+        }
+      }
+
+      function scrollToAnchor(targetY) {
+        anchorTargetY = targetY;
+        anchorCurrentY = window.scrollY;
+        cancelAnimationFrame(anchorScrollFrame);
+        if (!anchorScrollRunning) {
+          anchorScrollRunning = true;
+        }
+        anchorScrollFrame = requestAnimationFrame(runAnchorScroll);
+      }
+
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
         link.addEventListener("click", (e) => {
           const target = document.querySelector(link.getAttribute("href"));
@@ -3326,7 +3363,7 @@
             0,
             maxScrollY(),
           );
-          window.scrollTo({ top: targetY, behavior: "smooth" });
+          scrollToAnchor(targetY);
         });
       });
 
@@ -3664,8 +3701,17 @@
         },
       ];
 
+      function updateScoreInputFill(input) {
+        const min = Number(input.min || 0);
+        const max = Number(input.max || 100);
+        const value = Number(input.value);
+        const fill = ((value - min) / Math.max(1, max - min)) * 100;
+        input.style.setProperty("--fill", `${fill}%`);
+      }
+
       function updateSubscriptionScore() {
         if (!scoreInputs.length || !scoreRing || !scoreValue) return;
+        scoreInputs.forEach(updateScoreInputFill);
         const qualityValues = Array.from(scoreInputs).map((input) => {
           const value = Number(input.value);
           return input.dataset.good === "low" ? 6 - value : value;
@@ -3704,7 +3750,10 @@
       }
 
       scoreInputs.forEach((input) => {
-        input.addEventListener("input", updateSubscriptionScore);
+        input.addEventListener("input", () => {
+          updateScoreInputFill(input);
+          updateSubscriptionScore();
+        });
       });
       updateSubscriptionScore();
 
