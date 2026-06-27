@@ -441,9 +441,6 @@
         transform: translate3d(0, var(--phone-float), 0)
           scale(var(--phone-scale));
         opacity: var(--phone-opacity);
-        transition:
-          transform 0.16s linear,
-          opacity 0.16s linear;
         will-change: transform, opacity;
       }
       .phone {
@@ -3370,12 +3367,86 @@
       function scrollToAnchor(targetY) {
         anchorTargetY = targetY;
         anchorCurrentY = window.scrollY;
+        wheelScrollRunning = false;
+        wheelVelocity = 0;
+        cancelAnimationFrame(wheelScrollFrame);
         cancelAnimationFrame(anchorScrollFrame);
         if (!anchorScrollRunning) {
           anchorScrollRunning = true;
         }
         anchorScrollFrame = requestAnimationFrame(runAnchorScroll);
       }
+
+      let wheelScrollFrame = 0;
+      let wheelCurrentY = window.scrollY;
+      let wheelVelocity = 0;
+      let wheelScrollRunning = false;
+
+      function normalizeWheelDelta(event) {
+        const unit =
+          event.deltaMode === 1
+            ? 40
+            : event.deltaMode === 2
+              ? window.innerHeight
+              : 1;
+        const delta = event.deltaY * unit;
+        return Math.sign(delta) * Math.min(Math.abs(delta), 320);
+      }
+
+      function runWheelScroll() {
+        const nextY = clamp(wheelCurrentY + wheelVelocity, 0, maxScrollY());
+        if (nextY === 0 || nextY === maxScrollY()) {
+          wheelVelocity = 0;
+        }
+        wheelCurrentY = nextY;
+        window.scrollTo(0, wheelCurrentY);
+        wheelVelocity *= 0.935;
+        if (Math.abs(wheelVelocity) < 0.04) {
+          wheelVelocity = 0;
+          wheelScrollRunning = false;
+        }
+        if (wheelScrollRunning) {
+          wheelScrollFrame = requestAnimationFrame(runWheelScroll);
+        }
+      }
+
+      window.addEventListener(
+        "wheel",
+        (event) => {
+          const isMouseWheel =
+            event.deltaMode !== 0 || Math.abs(event.deltaY) >= 80;
+          if (event.ctrlKey || window.innerWidth <= 720 || !isMouseWheel) {
+            return;
+          }
+          event.preventDefault();
+          anchorScrollRunning = false;
+          cancelAnimationFrame(anchorScrollFrame);
+          if (!wheelScrollRunning) {
+            wheelCurrentY = window.scrollY;
+          }
+          wheelVelocity = clamp(
+            wheelVelocity + normalizeWheelDelta(event) * 0.055,
+            -30,
+            30,
+          );
+          if (!wheelScrollRunning) {
+            wheelScrollRunning = true;
+            wheelScrollFrame = requestAnimationFrame(runWheelScroll);
+          }
+        },
+        { passive: false },
+      );
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!wheelScrollRunning && !anchorScrollRunning) {
+            wheelCurrentY = window.scrollY;
+            wheelVelocity = 0;
+          }
+        },
+        { passive: true },
+      );
 
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
         link.addEventListener("click", (e) => {
